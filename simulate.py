@@ -22,6 +22,19 @@ FRACTIONS = (0.05, 0.10, 0.25, 0.50)
 OUTPUT = Path(__file__).resolve().parent / "results.csv"
 
 
+def probability_below_start(fraction: float) -> float:
+    """Exact binomial probability that terminal wealth is below initial wealth."""
+    log_win = math.log1p(fraction)
+    log_loss = math.log1p(-fraction)
+    return sum(
+        math.comb(BET_COUNT, wins)
+        * WIN_PROBABILITY**wins
+        * (1 - WIN_PROBABILITY) ** (BET_COUNT - wins)
+        for wins in range(BET_COUNT + 1)
+        if wins * log_win + (BET_COUNT - wins) * log_loss < 0
+    )
+
+
 def main() -> None:
     random_generator = random.Random(SEED)
     win_counts = [
@@ -44,11 +57,12 @@ def main() -> None:
                 "p10_wealth_simulated": f"{math.exp(sorted_log_wealth[int(0.10 * PATHS)]):.4f}",
                 "p90_wealth_simulated": f"{math.exp(sorted_log_wealth[int(0.90 * PATHS)]):.4f}",
                 "share_below_start_simulated": f"{sum(value < 0 for value in log_wealth) / PATHS:.4f}",
+                "share_below_start_exact": f"{probability_below_start(fraction):.4f}",
                 "expected_log_growth_per_bet_exact": f"{WIN_PROBABILITY * math.log1p(fraction) + (1 - WIN_PROBABILITY) * math.log1p(-fraction):.6f}",
             }
         )
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=rows[0].keys())
+        writer = csv.DictWriter(handle, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     for row in rows:
