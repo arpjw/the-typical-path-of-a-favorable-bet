@@ -1,5 +1,5 @@
-stake_fraction,expected_wealth_exact,median_wealth_simulated,p10_wealth_simulated,p90_wealth_simulated,share_below_start_simulated,expected_log_growth_per_bet_exact
-0.05,1.6467,1.4554,0.7983,2.6532,0.2402,0.003753
-0.10,2.7048,1.6501,0.4950,5.5006,0.3060,0.005008
-0.25,11.8137,0.5103,0.0238,10.9370,0.6210,-0.006728
-0.50,131.5013,0.0001,0.0000,0.1003,0.9561,-0.088910
+stake_fraction,expected_wealth_exact,median_wealth_simulated,p10_wealth_simulated,p90_wealth_simulated,share_below_start_simulated,share_below_start_exact,expected_log_growth_per_bet_exact
+0.05,1.6467,1.4554,0.7983,2.6532,0.2402,0.2404,0.003753
+0.10,2.7048,1.6501,0.4950,5.5006,0.3060,0.3069,0.005008
+0.25,11.8137,0.5103,0.0238,10.9370,0.6210,0.6172,-0.006728
+0.50,131.5013,0.0001,0.0000,0.1003,0.9561,0.9571,-0.088910
